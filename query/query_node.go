@@ -90,35 +90,33 @@ func AllNode() (json interface{}, error string) {
 	// Find the review itemsclass="cell"
 	//切片方式
 	var list [] module.RootNode
+	nodeDoc := doc.Find("#Wrapper").Find("#Main").Find("div[class=box]")
+	log.Println(nodeDoc)
+	nodeDoc.Each(func(i int, selection *goquery.Selection) {
+		var reply = new(module.RootNode)
+		//根节点 name
+		rootNode := selection.Find("div[class=header]")
+		rootNode.Find(`span[class="fr fade"]`).Remove()
+		reply.Title = rootNode.Text()
+		//子节点
+		var nodes [] module.ChildNode
+		selection.Find("div[class=inner]").Find("a").Each(
+			func(i int, selection *goquery.Selection) {
+				var node = new(module.ChildNode)
+				node.Title = selection.Text()
+				href, err := selection.Attr("href")
+				if err {
+					node.AliasName = replace(href, "/go/", "")
+				} else {
+					node.AliasName = ""
+				}
+				nodes = append(nodes, *node)
+			})
 
-	//list:=list.New()
-	doc.Find("#Wrapper").Find(".content").Find("div[class=box]").Each(
-		func(i int, selection *goquery.Selection) {
-			if i > 0 {
-				var reply = new(module.RootNode)
-				//根节点 name
-				rootNode := selection.Find("div[class=header]")
-				rootNode.Find(`span[class="fr fade"]`).Remove()
-				reply.Title = rootNode.Text()
-				//子节点
-				var nodes [] module.ChildNode
-				selection.Find("div[class=inner]").Find("a").Each(
-					func(i int, selection *goquery.Selection) {
-						var node = new(module.ChildNode)
-						node.Title = selection.Text()
-						href, err := selection.Attr("href")
-						if err {
-							node.AliasName = replace(href, "/go/", "")
-						} else {
-							node.AliasName = ""
-						}
-						nodes = append(nodes, *node)
-					})
+		reply.ChildNode = nodes
 
-				reply.ChildNode = nodes
-
-				list = append(list, *reply)
-			}
-		})
+		list = append(list, *reply)
+	})
+	list = append(list[:0],list[1:]...)
 	return list, ""
 }

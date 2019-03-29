@@ -14,7 +14,7 @@ func ItemByTab(tab string, page string) (json interface{}, error string) {
 	if page == "" {
 		requestUrl = BaseUrl + "?tab=" + tab
 	} else {
-		requestUrl = BaseUrl + "?tab=" + tab + "?p=" + page
+		requestUrl = BaseUrl + tab + "?p=" + page
 	}
 	doc, err := RequestClient(requestUrl)
 	if err != "" {

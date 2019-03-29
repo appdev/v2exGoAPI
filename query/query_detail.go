@@ -29,7 +29,7 @@ func DetailsTopics(ids string) (json interface{}, error string) {
 	sendDoc := replace(headerDoc.Find("small[class=gray]").Text(), "By", "")
 	timeDoc := replace(strings.Split(replace(sendDoc, "at", ""), ",")[0], " ", "")
 
-	html, htmlErr := contentDoc.Find(".cell").Find(".topic_content").Html()
+	html, htmlErr := contentDoc.Find(".cell").Find(".topic_content").Find(".markdown_body").Html()
 
 	//节点
 	nodeDoc := headerDoc.Find(".chevron").Next()
