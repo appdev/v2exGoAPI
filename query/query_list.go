@@ -68,17 +68,7 @@ func ItemByTab(tab string, page string) (json interface{}, error string) {
 			list = append(list, *items)
 			//list.PushBack(*items)
 		})
-		//lang, _ := json.Marshal(l)
 
-		//fmt.Println(string(lang))
-		//doc.Find("cell item").Each(func(i int, selection *goquery.Selection) {
-		//	title := selection.Find("item_title").Find("a").Text()
-		//	srrc := selection.Find("avatar").SetText("src")
-		//	print("Review %d: %s - %s\n", i, title, srrc)
-		//})
 	})
-
-	//lang, err := util.DataToJson(list)
-	//return string(lang), err
 	return list, ""
 }
