@@ -116,9 +116,6 @@ func TopicsReply(ids string, page string) (json interface{}, error string) {
 		}
 		list = append(list, *reply)
 	})
-	//lang, err := util.DataToJson(list)
-	//return string(lang), err
-	//list = append(list, list[2:]...)
 	list = list[2:]
 	return list, ""
 }
