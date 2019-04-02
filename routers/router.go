@@ -15,7 +15,7 @@ func loadRouters(router *gin.Engine) {
 
 	router.GET("/", func(context *gin.Context) {
 		url := context.DefaultQuery("tab", "hot")
-		page := context.DefaultQuery("page", "1")
+		page := context.DefaultQuery("page", "")
 		data, err := query.ItemByTab(url, page)
 		resultData(context, data, err)
 	})
